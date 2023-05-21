@@ -8,8 +8,8 @@ import { Link } from 'react-router-dom'
 
 const Navbar = () => {
 	return (
-		<div className='h-20'>
-			<div className='flex justify-between px-6 py-8'>
+		<div className='flex h-20 items-center'>
+			<div className='flex flex-1 justify-between px-6'>
 				{/* LEFT SIDE */}
 				<div className='flex items-center gap-5'>
 					<div className='flex items-center'>
@@ -64,7 +64,7 @@ const Navbar = () => {
 							<ShoppingCartOutlinedIcon htmlColor='#777' />
 							<span
 								className={`
-								absolute -right-3 -top-3 flex h-6 w-6
+								absolute -right-3 -top-3 flex h-5 w-5
 								items-center justify-center rounded-full 
 								bg-blue-500 text-xs font-bold text-white`}
 							>
