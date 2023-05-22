@@ -9,3 +9,47 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+model Product {
+  id            String        @id @default(uuid())
+  title         String
+  desc          String
+  img1          String
+  img2          String
+  price         Decimal
+  isNew         Boolean       @map("is_new")
+  categories    Category[]
+  subCategories SubCategory[]
+
+  @@map("products")
+}
+
+model Category {
+  id            String        @id @default(uuid())
+  title         CategoryTitle @unique
+  desc          String
+  img           String
+  products      Product[]
+  subCategories SubCategory[]
+
+  @@map("categories")
+}
+
+model SubCategory {
+  id         String           @id @default(uuid())
+  title      SubCategoryTitle @unique
+  products   Product[]
+  categories Category[]
+
+  @@map("sub_categories")
+}
+
+enum CategoryTitle {
+  women
+
+  @@map("category_title")
+}
+
+enum SubCategoryTitle {
+  hat
+}
