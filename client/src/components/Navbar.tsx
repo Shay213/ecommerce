@@ -5,10 +5,30 @@ import PersonOutlinedIcon from '@mui/icons-material/PersonOutlined'
 import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined'
 import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined'
 import { Link } from 'react-router-dom'
+import { useEffect, useState } from 'react'
+import Cart from './Cart'
 
 const Navbar = () => {
+	const [open, setOpen] = useState(false)
+	const [hasScrolled, setHasScrolled] = useState(false)
+
+	useEffect(() => {
+		const handleScroll = () => {
+			const scrollTop = document.documentElement.scrollTop
+			setHasScrolled(scrollTop > 0)
+		}
+		window.addEventListener('scroll', handleScroll)
+		return () => {
+			window.removeEventListener('scroll', handleScroll)
+		}
+	}, [])
+
 	return (
-		<div className='flex h-20 items-center'>
+		<div
+			className={`sticky top-0 z-40 flex h-20 items-center bg-white ${
+				hasScrolled ? 'shadow-sm' : ''
+			}`}
+		>
 			<div className='flex flex-1 justify-between px-6'>
 				{/* LEFT SIDE */}
 				<div className='flex items-center gap-5'>
@@ -60,7 +80,10 @@ const Navbar = () => {
 							className='cursor-pointer'
 							htmlColor='#777'
 						/>
-						<div className='relative cursor-pointer'>
+						<div
+							className='relative cursor-pointer'
+							onClick={() => setOpen(!open)}
+						>
 							<ShoppingCartOutlinedIcon htmlColor='#777' />
 							<span
 								className={`
@@ -74,6 +97,7 @@ const Navbar = () => {
 					</div>
 				</div>
 			</div>
+			{open && <Cart />}
 		</div>
 	)
 }
