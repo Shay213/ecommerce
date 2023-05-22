@@ -21,13 +21,12 @@ export interface Product {
 
 const FeaturedProducts = ({ type }: { type: FeaturedType }) => {
 	const { isLoading, isError, data } = useQuery<Product[]>({
-		queryKey: ['featuredProducts'],
+		queryKey: ['featuredProducts', type],
 		queryFn: () =>
-			newRequest.get('/products').then((res) => res.data as Product[]),
+			newRequest
+				.get(`/products${type ? '?productType=' + type : ''}`)
+				.then((res) => res.data as Product[]),
 	})
-
-	if (isLoading) return console.log('loading')
-	if (isError) return null
 
 	return (
 		<div className='mx-48 my-20'>
@@ -41,9 +40,11 @@ const FeaturedProducts = ({ type }: { type: FeaturedType }) => {
 				</p>
 			</div>
 			<div className='mx-auto grid w-5/6 grid-cols-[repeat(auto-fit,_minmax(170px,_1fr))] gap-11'>
-				{data.map((item) => (
-					<Card key={item.id} item={item} />
-				))}
+				{isLoading
+					? 'Loading...'
+					: isError
+					? 'Something went wrong!'
+					: data.map((item) => <Card key={item.id} item={item} />)}
 			</div>
 		</div>
 	)

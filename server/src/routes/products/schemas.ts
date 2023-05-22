@@ -28,12 +28,22 @@ const product = {
   ],
 };
 
+const getProductsQuerystring = {
+  type: "object",
+  properties: {
+    productType: { type: "string", enum: ["normal", "featured", "trending"] },
+  },
+} as const;
+
+export type GetProductsQuerystring = FromSchema<typeof getProductsQuerystring>;
+
 const getProductsSuccessReply = {
   type: "array",
   items: product,
 };
 
 export const getProductsSchema: FastifySchema = {
+  querystring: getProductsQuerystring,
   response: {
     200: getProductsSuccessReply,
   },
