@@ -13,10 +13,10 @@ const Categories = () => {
 					<button
 						className={`
 						absolute inset-0 m-auto h-min w-max cursor-pointer 
-						rounded-sm border-none bg-white px-4 py-1 text-lg uppercase
+						rounded-sm border-none bg-white text-lg uppercase
 						opacity-90 outline-none hover:opacity-100`}
 					>
-						<Link to='/products/1' className='h-full w-full'>
+						<Link to='/products/1' className='h-full w-full px-4 py-1'>
 							Sale
 						</Link>
 					</button>
@@ -30,10 +30,10 @@ const Categories = () => {
 					<button
 						className={`
 						absolute inset-0 m-auto h-min w-max cursor-pointer 
-						rounded-sm border-none bg-white px-4 py-1 text-lg uppercase
+						rounded-sm border-none bg-white text-lg uppercase
 						opacity-90 outline-none hover:opacity-100`}
 					>
-						<Link to='/products/1' className='h-full w-full'>
+						<Link to='/products/1' className='h-full w-full px-4 py-1'>
 							Women
 						</Link>
 					</button>
@@ -47,10 +47,10 @@ const Categories = () => {
 					<button
 						className={`
 						absolute inset-0 m-auto h-min w-max cursor-pointer 
-						rounded-sm border-none bg-white px-4 py-1 text-lg uppercase
+						rounded-sm border-none bg-white text-lg uppercase
 						opacity-90 outline-none hover:opacity-100`}
 					>
-						<Link to='/products/1' className='h-full w-full'>
+						<Link to='/products/1' className='h-full w-full px-4 py-1'>
 							New Season
 						</Link>
 					</button>
@@ -64,10 +64,10 @@ const Categories = () => {
 					<button
 						className={`
 						absolute inset-0 m-auto h-min w-max cursor-pointer 
-						rounded-sm border-none bg-white px-4 py-1 text-lg uppercase
+						rounded-sm border-none bg-white text-lg uppercase
 						opacity-90 outline-none hover:opacity-100`}
 					>
-						<Link to='/products/1' className='h-full w-full'>
+						<Link to='/products/1' className='h-full w-full px-4 py-1'>
 							Men
 						</Link>
 					</button>
@@ -81,10 +81,10 @@ const Categories = () => {
 					<button
 						className={`
 						absolute inset-0 m-auto h-min w-max cursor-pointer 
-						rounded-sm border-none bg-white px-4 py-1 text-lg uppercase
+						rounded-sm border-none bg-white text-lg uppercase
 						opacity-90 outline-none hover:opacity-100`}
 					>
-						<Link to='/products/1' className='h-full w-full'>
+						<Link to='/products/1' className='h-full w-full px-4 py-1'>
 							Accessories
 						</Link>
 					</button>
@@ -98,10 +98,10 @@ const Categories = () => {
 					<button
 						className={`
 						absolute inset-0 m-auto h-min w-max cursor-pointer 
-						rounded-sm border-none bg-white px-4 py-1 text-lg uppercase 
+						rounded-sm border-none bg-white text-lg uppercase 
 						opacity-90 outline-none hover:opacity-100`}
 					>
-						<Link to='/products/1' className='h-full w-full'>
+						<Link to='/products/1' className='h-full w-full px-4 py-1'>
 							Shoes
 						</Link>
 					</button>

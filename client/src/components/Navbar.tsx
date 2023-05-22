@@ -13,7 +13,7 @@ const Navbar = () => {
 				{/* LEFT SIDE */}
 				<div className='flex items-center gap-5'>
 					<div className='flex items-center'>
-						<img src='images/en.png' alt='flag' />
+						<img src='/images/en.png' alt='flag' />
 						<KeyboardArrowDownIcon />
 					</div>
 					<div className='flex items-center'>
