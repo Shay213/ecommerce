@@ -56,7 +56,7 @@ const FeaturedProducts = ({ type }: { type: FeaturedType }) => {
 					laborum error quas optio.
 				</p>
 			</div>
-			<div className='mx-auto grid w-5/6 grid-flow-col gap-11'>
+			<div className='mx-auto grid w-5/6 grid-cols-[repeat(auto-fit,_minmax(170px,_1fr))] gap-11'>
 				{DATA.map((item) => (
 					<Card key={item.id} item={item} />
 				))}
