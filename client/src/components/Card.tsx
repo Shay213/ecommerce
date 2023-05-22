@@ -1,16 +1,10 @@
 import { Link } from 'react-router-dom'
+import type { Product } from './FeaturedProducts'
 
-interface Item {
-	id: number
-	img1: string
-	img2: string
-	title: string
-	isNew: boolean
-	oldPrice: number
-	price: number
-}
+const API_FILES_URL = import.meta.env.VITE_API_FILES_URL as string
+if (!API_FILES_URL) throw new Error('Api files url not specified!')
 
-const Card = ({ item }: { item: Item }) => {
+const Card = ({ item }: { item: Product }) => {
 	return (
 		<Link to={`/product/${item.id}`}>
 			<div className='overflow-hidden rounded-md shadow-lg'>
@@ -21,12 +15,12 @@ const Card = ({ item }: { item: Item }) => {
 						</span>
 					)}
 					<img
-						src={item.img1}
+						src={API_FILES_URL + item.img1}
 						alt='product'
 						className='absolute z-10 h-full w-full object-cover'
 					/>
 					<img
-						src={item.img2}
+						src={API_FILES_URL + item.img2}
 						alt='product'
 						className='absolute h-full w-full object-cover group-hover:z-20'
 					/>
@@ -35,7 +29,7 @@ const Card = ({ item }: { item: Item }) => {
 					<h2 className='text-sm'>{item.title}</h2>
 					<div className='mt-2 flex gap-3 text-base font-bold'>
 						<h3 className='text-gray-500 line-through decoration-2'>
-							${item.oldPrice}
+							${item.price + 20}
 						</h3>
 						<h3>${item.price}</h3>
 					</div>

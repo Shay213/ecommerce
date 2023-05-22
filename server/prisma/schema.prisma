@@ -16,8 +16,9 @@ model Product {
   desc          String
   img1          String
   img2          String
+  productType   ProductType   @default(normal) @map("product_type")
   price         Decimal
-  isNew         Boolean       @map("is_new")
+  isNew         Boolean       @default(false) @map("is_new")
   categories    Category[]
   subCategories SubCategory[]
 
@@ -46,10 +47,21 @@ model SubCategory {
 
 enum CategoryTitle {
   women
+  man
 
   @@map("category_title")
 }
 
 enum SubCategoryTitle {
   hat
+  tShirt @map("t_shirt")
+  suit
+}
+
+enum ProductType {
+  normal
+  featured
+  trending
+
+  @@map("product_type")
 }
