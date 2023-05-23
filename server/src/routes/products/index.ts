@@ -1,6 +1,10 @@
 import { FastifyInstance } from "fastify";
-import { getProductsSchema, getFilteredProductsSchema } from "./schemas";
-import { getProducts, getFilteredProducts } from "./handlers";
+import {
+  getProductsSchema,
+  getFilteredProductsSchema,
+  getProductSchema,
+} from "./schemas";
+import { getProducts, getFilteredProducts, getProduct } from "./handlers";
 
 export default async (fastify: FastifyInstance) => {
   fastify.get("/", { schema: getProductsSchema }, getProducts);
@@ -9,4 +13,5 @@ export default async (fastify: FastifyInstance) => {
     { schema: getFilteredProductsSchema },
     getFilteredProducts
   );
+  fastify.get("/single/:id", { schema: getProductSchema }, getProduct);
 };

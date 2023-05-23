@@ -91,3 +91,20 @@ export const getFilteredProductsSchema: FastifySchema = {
     },
   },
 };
+
+const getProductParams = {
+  type: "object",
+  properties: {
+    id: { type: "string" },
+  },
+  required: ["id"],
+} as const;
+
+export type GetProductParams = FromSchema<typeof getProductParams>;
+
+export const getProductSchema: FastifySchema = {
+  params: getProductParams,
+  response: {
+    200: product,
+  },
+};

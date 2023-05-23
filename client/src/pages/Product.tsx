@@ -1,53 +1,62 @@
 import { useState } from 'react'
-import {
-	AddShoppingCart,
-	FavoriteBorder,
-	Balance,
-	Favorite,
-} from '@mui/icons-material'
+import { AddShoppingCart, FavoriteBorder, Balance } from '@mui/icons-material'
+import { useParams } from 'react-router-dom'
+import { useQuery } from '@tanstack/react-query'
+import newRequest from '../utils/newRequest'
+import { Product as IProduct } from '../components/FeaturedProducts'
 
-const IMAGES = [
-	'https://images.pexels.com/photos/1839904/pexels-photo-1839904.jpeg?auto=compress&cs=tinysrgb&w=1600',
-	'https://images.pexels.com/photos/1390602/pexels-photo-1390602.jpeg?auto=compress&cs=tinysrgb&w=1600',
-]
+enum ImgFields {
+	FIRST_IMG = 'img1',
+	SECOND_IMG = 'img2',
+}
+
+const API_FILES_URL = import.meta.env.VITE_API_FILES_URL as string
 
 const Product = () => {
-	const [selectedImg, setSelectedImg] = useState(0)
+	const { id } = useParams()
+	const [selectedImg, setSelectedImg] = useState(ImgFields.FIRST_IMG)
 	const [quantity, setQuantity] = useState(1)
+
+	const { isLoading, isError, data } = useQuery<IProduct>({
+		queryKey: ['product', id],
+		queryFn: () =>
+			newRequest
+				.get(`/products/single/${id || ''}`)
+				.then((res) => res.data as IProduct),
+	})
+
+	if (isLoading) return <p>Loading...</p>
+	if (isError) return <p>Product not found!</p>
+
 	return (
 		<div className='flex gap-12 px-5 py-12'>
 			<div className='flex flex-1 gap-4'>
 				<div className='flex flex-1 flex-col gap-3'>
 					<img
-						src={IMAGES[0]}
+						src={API_FILES_URL + data.img1}
 						alt=''
-						onClick={(e) => setSelectedImg(0)}
+						onClick={(e) => setSelectedImg(ImgFields.FIRST_IMG)}
 						className='h-36 w-full cursor-pointer object-cover'
 					/>
 					<img
-						src={IMAGES[1]}
+						src={API_FILES_URL + data.img2}
 						alt=''
-						onClick={(e) => setSelectedImg(1)}
+						onClick={(e) => setSelectedImg(ImgFields.SECOND_IMG)}
 						className='h-36 w-full cursor-pointer object-cover'
 					/>
 				</div>
 				<div className='flex-[5]'>
 					<img
-						src={IMAGES[selectedImg]}
+						src={API_FILES_URL + data[selectedImg]}
 						alt=''
 						className='max-h-[700px] w-full object-cover'
 					/>
 				</div>
 			</div>
 			<div className='flex flex-1 flex-col gap-7'>
-				<h1 className='text-3xl'>Title</h1>
-				<span className='text-2xl font-bold text-blue-500'>$199</span>
-				<p className='text-base font-light'>
-					Lorem ipsum dolor sit amet consectetur adipisicing elit. Sunt fugiat
-					reiciendis numquam nesciunt, dolores amet officia. Quo, velit
-					voluptatibus, a aliquam eveniet aspernatur molestiae minima sunt
-					laudantium exercitationem assumenda ad!
-				</p>
+				<h1 className='text-3xl'>{data.title}</h1>
+				<span className='text-2xl font-bold text-blue-500'>${data.price}</span>
+				<p className='text-base font-light'>{data.desc}</p>
 				<div className='flex items-center gap-3'>
 					<button
 						type='button'

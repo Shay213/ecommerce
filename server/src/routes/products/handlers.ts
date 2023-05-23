@@ -2,6 +2,7 @@ import { RouteHandler } from "fastify";
 import {
   GetFilteredProductsParams,
   GetFilteredProductsQuerystring,
+  GetProductParams,
   GetProductsQuerystring,
 } from "./schemas";
 
@@ -42,6 +43,21 @@ export const getFilteredProducts: RouteHandler<{
       ...(sort && { orderBy: { price: sort === "asc" ? "asc" : "desc" } }),
     });
     return reply.code(200).send(products);
+  } catch (error) {
+    return reply.code(500).send(error);
+  }
+};
+
+export const getProduct: RouteHandler<{ Params: GetProductParams }> = async (
+  req,
+  reply
+) => {
+  const { id } = req.params;
+  try {
+    const product = await req.server.prisma.product.findUnique({
+      where: { id },
+    });
+    return reply.code(200).send(product);
   } catch (error) {
     return reply.code(500).send(error);
   }

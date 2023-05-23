@@ -32,7 +32,7 @@ const List = ({ catId, maxPrice, sort, subCats }: ListProps) => {
 	if (isError) return <p>Something went wrong!</p>
 
 	return (
-		<div className='grid grid-cols-[repeat(auto-fit,_minmax(200px,_1fr))] gap-11'>
+		<div className='grid grid-cols-[repeat(auto-fill,_minmax(200px,_1fr))] gap-11'>
 			{data?.map((item) => (
 				<Card key={item.id} item={item} />
 			))}
