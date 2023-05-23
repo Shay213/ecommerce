@@ -69,3 +69,11 @@ enum ProductType {
 
   @@map("product_type")
 }
+
+model Order {
+  id       String @id @default(uuid())
+  stripeId String @map("stripe_id")
+  products Json
+
+  @@map("orders")
+}

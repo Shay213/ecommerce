@@ -1,4 +1,10 @@
-import { PropsWithChildren, createContext, useReducer } from 'react'
+import {
+	PropsWithChildren,
+	Reducer,
+	createContext,
+	useEffect,
+	useReducer,
+} from 'react'
 
 interface RemoveFromCartPayload {
 	id: string
@@ -71,7 +77,16 @@ interface ManageCart {
 export const CartContext = createContext<ManageCart | null>(null)
 
 const CartContextProvider = ({ children }: PropsWithChildren) => {
-	const [state, dispatch] = useReducer(reducer, INITIAL_STATE)
+	const [state, dispatch] = useReducer(
+		reducer,
+		localStorage.getItem('cart')
+			? (JSON.parse(localStorage.getItem('cart') as string) as State)
+			: INITIAL_STATE
+	)
+
+	useEffect(() => {
+		localStorage.setItem('cart', JSON.stringify(state))
+	}, [state])
 
 	const manageCart = {
 		state,

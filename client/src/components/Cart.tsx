@@ -1,5 +1,7 @@
 import { DeleteOutline } from '@mui/icons-material'
 import useCartContext from '../context/useCartContext'
+import newRequest from '../utils/newRequest'
+import { loadStripe } from '@stripe/stripe-js'
 
 const API_FILES_URL = import.meta.env.VITE_API_FILES_URL as string
 
@@ -9,6 +11,23 @@ const Cart = () => {
 	const total = cartItems
 		?.reduce((sum, el) => sum + el.price * el.quantity, 0)
 		.toFixed(2)
+
+	const stripePromise = loadStripe(
+		'pk_test_51N7J7NExVyvJh1jq1jfHzBI0832rS6un1tO0l7J7cVSFCrJuDNptCdX1ByXJ6HJDoxaj7p2WeJcE391IicAhhTds00ihQlpSHI'
+	)
+
+	const handlePayment = async () => {
+		try {
+			const stripe = await stripePromise
+			const res = await newRequest.post('/payment', { products: cartItems })
+			await stripe?.redirectToCheckout({
+				sessionId: res.data.stripeSession.id,
+			})
+		} catch (error) {
+			console.log(error)
+		}
+	}
+
 	return (
 		<div className='absolute right-5 top-24 w-[470px] bg-white p-5 shadow-lg'>
 			{!cartItems || cartItems.length === 0 ? (
@@ -57,9 +76,10 @@ const Cart = () => {
 						<button
 							type='button'
 							className={`
-					w-max cursor-pointer rounded-sm bg-blue-500 p-2 text-sm font-medium 
-          uppercase text-white opacity-[0.85] hover:opacity-100
-				`}
+								w-max cursor-pointer rounded-sm bg-blue-500 p-2 text-sm font-medium 
+								uppercase text-white opacity-[0.85] hover:opacity-100
+							`}
+							onClick={handlePayment}
 						>
 							proceed to checkout
 						</button>

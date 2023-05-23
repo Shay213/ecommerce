@@ -25,9 +25,11 @@
     "@fastify/multipart": "^7.6.0",
     "@fastify/static": "^6.10.1",
     "@prisma/client": "^4.14.1",
+    "decimal.js": "^10.4.3",
     "dotenv": "^16.0.3",
     "fastify": "^4.17.0",
     "fastify-plugin": "^4.5.0",
-    "json-schema-to-ts": "^2.8.2"
+    "json-schema-to-ts": "^2.8.2",
+    "stripe": "^12.6.0"
   }
 }

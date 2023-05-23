@@ -12,6 +12,7 @@ import prismaPlugin from "./plugins/prisma";
 import products from "./routes/products";
 import categories from "./routes/categories";
 import subCategories from "./routes/subCategories";
+import payment from "./routes/payment";
 
 const fastify = Fastify({ logger: true });
 fastify.register(fastifyCors, {
@@ -30,6 +31,7 @@ fastify.register(prismaPlugin);
 fastify.register(products, { prefix: "/api/products" });
 fastify.register(categories, { prefix: "/api/categories" });
 fastify.register(subCategories, { prefix: "/api/sub-categories" });
+fastify.register(payment, { prefix: "/api/payment" });
 
 /*async function main() {
   await fastify.register(prismaPlugin);
