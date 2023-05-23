@@ -1,6 +1,14 @@
 import { FastifySchema } from "fastify";
 import { FromSchema } from "json-schema-to-ts";
 
+const subCats = {
+  enum: ["hat", "tShirt", "suit"],
+};
+
+const sort = {
+  enum: ["asc", "desc"],
+};
+
 const product = {
   type: "object",
   properties: {
@@ -46,5 +54,40 @@ export const getProductsSchema: FastifySchema = {
   querystring: getProductsQuerystring,
   response: {
     200: getProductsSuccessReply,
+  },
+};
+
+const getFilteredProductsParams = {
+  type: "object",
+  properties: {
+    categoryId: { type: "string" },
+  },
+} as const;
+
+export type GetFilteredProductsParams = FromSchema<
+  typeof getFilteredProductsParams
+>;
+
+const getFilteredProductsQuerystring = {
+  type: "object",
+  properties: {
+    maxPrice: { type: "number" },
+    sort: { type: "string", ...sort },
+    subCats: { type: "string" },
+  },
+} as const;
+
+export type GetFilteredProductsQuerystring = FromSchema<
+  typeof getFilteredProductsQuerystring
+>;
+
+export const getFilteredProductsSchema: FastifySchema = {
+  params: getFilteredProductsParams,
+  querystring: getFilteredProductsQuerystring,
+  response: {
+    200: {
+      type: "array",
+      items: product,
+    },
   },
 };

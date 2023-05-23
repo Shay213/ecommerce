@@ -46,6 +46,9 @@ const Products = () => {
 		)
 	}
 
+	if (isLoading) return <p>Loading...</p>
+	if (isError) return <p>Something went wrong</p>
+
 	return (
 		<div className='flex px-7 py-11 '>
 			<div className='sticky top-10 flex h-full flex-1 flex-col gap-4'>
@@ -114,7 +117,12 @@ const Products = () => {
 					className='mb-12 h-72 w-full object-cover'
 				/>
 
-				<List catId={+catId} maxPrice={maxPrice} sort={sort} />
+				<List
+					catId={catId}
+					maxPrice={maxPrice}
+					sort={sort}
+					subCats={selectedSubCats}
+				/>
 			</div>
 		</div>
 	)
