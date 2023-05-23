@@ -1,6 +1,8 @@
+import { useQuery } from '@tanstack/react-query'
 import List from '../components/List'
-import { useState } from 'react'
+import { ChangeEventHandler, useState } from 'react'
 import { useParams } from 'react-router-dom'
+import newRequest from '../utils/newRequest'
 
 export enum PriceRange {
 	MIN = 0,
@@ -12,36 +14,56 @@ export enum SortType {
 	DESC = 'desc',
 }
 
+type SubCategoryTitle = 'hat' | 'tShirt' | 'suit'
+
+interface SubCategory {
+	id: string
+	title: SubCategoryTitle
+}
+
 const Products = () => {
 	const { id: catId } = useParams()
 	const [maxPrice, setMaxPrice] = useState(1000)
 	const [sort, setSort] = useState<SortType | null>(null)
+	const [selectedSubCats, setSelectedSubCats] = useState<string[]>([])
+
+	const { isLoading, isError, data } = useQuery<SubCategory[]>({
+		queryKey: ['subCategories', catId],
+		queryFn: () =>
+			newRequest
+				.get(`/sub-categories${catId ? '/' + catId : ''}`)
+				.then((res) => res.data as SubCategory[]),
+	})
 
 	if (!catId) return null
+
+	const handleChange: ChangeEventHandler<HTMLInputElement> = (e) => {
+		const value = e.target.value
+		const isChecked = e.target.checked
+
+		setSelectedSubCats((prev) =>
+			isChecked ? [...prev, value] : prev.filter((el) => el !== value)
+		)
+	}
 
 	return (
 		<div className='flex px-7 py-11 '>
 			<div className='sticky top-10 flex h-full flex-1 flex-col gap-4'>
 				<div>
 					<h2 className='mb-2 text-lg font-medium'>Product Categories</h2>
-					<div>
-						<input type='checkbox' id='1' value={1} />
-						<label htmlFor='1' className='pl-2'>
-							Shoes
-						</label>
-					</div>
-					<div>
-						<input type='checkbox' id='2' value={2} />
-						<label htmlFor='2' className='pl-2'>
-							Skirts
-						</label>
-					</div>
-					<div>
-						<input type='checkbox' id='3' value={3} />
-						<label htmlFor='3' className='pl-2'>
-							Coats
-						</label>
-					</div>
+					{data?.map((el) => (
+						<div key={el.id}>
+							<input
+								type='checkbox'
+								id={el.id}
+								value={el.id}
+								onChange={handleChange}
+							/>
+							<label htmlFor={el.id} className='pl-2'>
+								{el.title}
+							</label>
+						</div>
+					))}
 				</div>
 				<div>
 					<h2 className='mb-2 text-lg font-medium'>Filter by price</h2>

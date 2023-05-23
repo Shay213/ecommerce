@@ -10,6 +10,8 @@ import prismaPlugin from "./plugins/prisma";
 
 // routes
 import products from "./routes/products";
+import categories from "./routes/categories";
+import subCategories from "./routes/subCategories";
 
 const fastify = Fastify({ logger: true });
 fastify.register(fastifyCors, {
@@ -26,19 +28,16 @@ fastify.register(prismaPlugin);
 
 // routes
 fastify.register(products, { prefix: "/api/products" });
+fastify.register(categories, { prefix: "/api/categories" });
+fastify.register(subCategories, { prefix: "/api/sub-categories" });
 
 /*async function main() {
   await fastify.register(prismaPlugin);
-  await fastify.prisma.product.create({
+  await fastify.prisma.category.create({
     data: {
-      title: "Women hat",
-      desc: "Nice hat",
-      img1: "img13.jpg",
-      img2: "img3.jpg",
-      price: 15,
-      isNew: true,
-      categories: { connect: { title: "women" } },
-      subCategories: { connect: { title: "hat" } },
+      title: "accessories",
+      desc: "accessories description",
+      img: "img4.jpg",
     },
   });
 }

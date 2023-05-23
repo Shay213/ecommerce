@@ -48,6 +48,10 @@ model SubCategory {
 enum CategoryTitle {
   women
   man
+  shoes
+  newSeason   @map("new_season")
+  sale
+  accessories
 
   @@map("category_title")
 }
