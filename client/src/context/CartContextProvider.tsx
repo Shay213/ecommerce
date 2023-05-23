@@ -1,24 +1,24 @@
 import { PropsWithChildren, createContext, useReducer } from 'react'
 
-interface AddToCartPayload {
-	id: string
-	quantity: number
-}
 interface RemoveFromCartPayload {
 	id: string
 }
 
-interface Product {
+interface CartProduct {
 	id: string
+	title: string
+	desc: string
+	price: number
+	img: string
 	quantity: number
 }
 
 interface State {
-	products: Product[]
+	products: CartProduct[]
 }
 
 type Action =
-	| { type: 'addToCart'; payload: AddToCartPayload }
+	| { type: 'addToCart'; payload: CartProduct }
 	| { type: 'removeFromCart'; payload: RemoveFromCartPayload }
 	| { type: 'resetCart' }
 
@@ -48,8 +48,12 @@ const reducer = (state: State, action: Action): State => {
 		}
 		case 'removeFromCart': {
 			const newState = { ...state }
-			newState.products.filter((product) => product.id !== action.payload.id)
-			return newState
+			return {
+				...state,
+				products: newState.products.filter(
+					(product) => product.id !== action.payload.id
+				),
+			}
 		}
 		case 'resetCart': {
 			return { ...state, products: [] }

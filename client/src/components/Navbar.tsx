@@ -7,11 +7,12 @@ import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined'
 import { Link } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import Cart from './Cart'
+import useCartContext from '../context/useCartContext'
 
 const Navbar = () => {
 	const [open, setOpen] = useState(false)
 	const [hasScrolled, setHasScrolled] = useState(false)
-
+	const manageCart = useCartContext()
 	useEffect(() => {
 		const handleScroll = () => {
 			const scrollTop = document.documentElement.scrollTop
@@ -91,7 +92,7 @@ const Navbar = () => {
 								items-center justify-center rounded-full 
 								bg-blue-500 text-xs font-bold text-white`}
 							>
-								10
+								{manageCart?.state.products.length ?? 0}
 							</span>
 						</div>
 					</div>

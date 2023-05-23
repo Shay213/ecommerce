@@ -4,6 +4,7 @@ import { useParams } from 'react-router-dom'
 import { useQuery } from '@tanstack/react-query'
 import newRequest from '../utils/newRequest'
 import { Product as IProduct } from '../components/FeaturedProducts'
+import useCartContext from '../context/useCartContext'
 
 enum ImgFields {
 	FIRST_IMG = 'img1',
@@ -16,6 +17,8 @@ const Product = () => {
 	const { id } = useParams()
 	const [selectedImg, setSelectedImg] = useState(ImgFields.FIRST_IMG)
 	const [quantity, setQuantity] = useState(1)
+	const cartManager = useCartContext()
+	const dispatch = cartManager?.dispatch
 
 	const { isLoading, isError, data } = useQuery<IProduct>({
 		queryKey: ['product', id],
@@ -86,6 +89,20 @@ const Product = () => {
 						rounded-sm bg-blue-500 p-2 font-medium uppercase text-white
 						opacity-[0.85] hover:opacity-100
 					`}
+					onClick={() =>
+						dispatch &&
+						dispatch({
+							type: 'addToCart',
+							payload: {
+								id: data.id,
+								title: data.title,
+								desc: data.desc,
+								price: data.price,
+								img: data.img1,
+								quantity,
+							},
+						})
+					}
 				>
 					<AddShoppingCart /> add to cart
 				</button>
